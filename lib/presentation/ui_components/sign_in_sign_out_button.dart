@@ -7,6 +7,7 @@ import 'package:kalpas_test/models/login_model.dart';
 import 'package:get/get.dart';
 import 'package:kalpas_test/models/signup_model.dart';
 import 'package:kalpas_test/presentation/screens/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInSignOutButton extends StatelessWidget {
   const SignInSignOutButton({Key key, @required this.displayLabel})
@@ -39,6 +40,8 @@ class SignInSignOutButton extends StatelessWidget {
         LoginModel output = await Get.find<LoginApiService>().makeRequest();
         // print(output.success);
         if (output.success == 'Success!') {
+          var loginData = await SharedPreferences.getInstance();
+          loginData.setBool('login', false);
           var snackbar = GetBar(message: 'Signing in, wait a moment');
           Get.showSnackbar(snackbar);
           await Future.delayed(Duration(seconds: 2));
@@ -59,6 +62,8 @@ class SignInSignOutButton extends StatelessWidget {
       SignUpModel output = await Get.find<SignUpApiService>().makeRequest();
       print(output.success);
       if (output.success == 'You are regestered,You can login now.') {
+        var loginData = await SharedPreferences.getInstance();
+        loginData.setBool('login', false);
         var snackbar = GetBar(message: 'Signing in, wait a moment');
         Get.showSnackbar(snackbar);
         await Future.delayed(Duration(seconds: 2));
@@ -66,7 +71,7 @@ class SignInSignOutButton extends StatelessWidget {
       } else if (output.success == "Email is already used.") {
         var snackbar = GetBar(message: "Email is already used.");
         Get.showSnackbar(snackbar);
-      } else{
+      } else {
         var snackbar = GetBar(message: "Something went wrong!");
         Get.showSnackbar(snackbar);
       }

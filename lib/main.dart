@@ -1,8 +1,9 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kalpas_test/presentation/screens/home_page.dart';
 import 'package:kalpas_test/presentation/screens/login_page.dart';
-import 'package:kalpas_test/presentation/screens/news_tab.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,9 +17,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
+  void initState(){
+    checkIfAlreadyLogin();
     super.initState();
   }
+
+  SharedPreferences loginData;
 
   @override
   Widget build(BuildContext context) {
@@ -32,5 +36,15 @@ class _MyAppState extends State<MyApp> {
         // ],
       ),
     );
+  }
+
+  void checkIfAlreadyLogin() async {
+    loginData = await SharedPreferences.getInstance();
+    var newUser = (loginData.getBool('login') ?? true);
+
+    print(newUser);
+    if (newUser == false) {
+      Get.offAll(HomePage());
+    }
   }
 }
