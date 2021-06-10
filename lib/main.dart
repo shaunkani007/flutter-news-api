@@ -28,12 +28,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       home: Scaffold(
-        // body: NewsTab(),
         body: LoginPage(),
-        // persistentFooterButtons: [
-        //   ElevatedButton(onPressed: () {}, child: Text('News')),
-        //   ElevatedButton(onPressed: () {}, child: Text('Favorites'))
-        // ],
       ),
     );
   }

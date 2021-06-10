@@ -20,8 +20,12 @@ class Splash extends StatelessWidget {
           Container(
             height: double.infinity,
             width: double.infinity,
-            color: Colors.red,
-            child: SafeArea(child: Text('Welcome')),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                alignment: Alignment.topCenter,
+                image: AssetImage('assets/images/background.png'),
+              ),
+            ),
           ),
           Container(
             height: 600,
