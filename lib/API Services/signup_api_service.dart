@@ -5,6 +5,22 @@ import 'dart:convert';
 import 'package:kalpas_test/models/signup_model.dart';
 
 class SignUpApiService {
+  String email;
+  String password;
+  String passwordConf;
+
+  void changeEmail(String newEmail) {
+    email = newEmail;
+  }
+
+  void changePassword(String newPassword) {
+    password = newPassword;
+  }
+
+  void changePasswordConf(String newPasswordConf) {
+    passwordConf = newPasswordConf;
+  }
+
   Future<SignUpModel> makeRequest() async {
     var client = http.Client();
     var signUpModel = null;
@@ -14,10 +30,10 @@ class SignUpApiService {
       var response = await client.post(
         url,
         body: {
-          "email": "pq@gmail.com",
-          "username": "ajodd",
-          "password": "test",
-          "passwordConf": "test"
+          "email": email,
+          "username": "tester",
+          "password": password,
+          "passwordConf": passwordConf
         },
       );
       if (response.statusCode == 200) {

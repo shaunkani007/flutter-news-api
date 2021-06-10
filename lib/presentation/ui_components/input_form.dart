@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:kalpas_test/API%20Services/login_api_service.dart';
+import 'package:kalpas_test/API%20Services/signup_api_service.dart';
 import 'package:kalpas_test/enums/values.dart';
 import 'package:kalpas_test/presentation/screens/login_page.dart';
 import 'package:kalpas_test/presentation/screens/signup_page.dart';
@@ -28,9 +29,26 @@ class InputForm extends StatelessWidget {
           style: TextStyle(fontSize: 20),
         ),
         Expanded(child: SizedBox()),
-        InputField(hintLabel: 'Email:'),
-        InputField(hintLabel: 'Password:'),
-        !isSignIn ? InputField(hintLabel: 'Confirm Password:') : Container(),
+        isSignIn
+            ? InputField(
+                hintLabel: 'Email:',
+                onChanged: (val) =>
+                    Get.find<LoginApiService>().changeEmail(val))
+            : InputField(
+                hintLabel: 'Email:',
+                onChanged: (val) =>
+                    Get.find<SignUpApiService>().changeEmail(val)),
+        isSignIn
+            ? InputField(
+                hintLabel: 'Password:',
+                onChanged: (val) =>
+                    Get.find<LoginApiService>().changePassword(val))
+            : InputField(
+                hintLabel: 'Password:',
+                onChanged: (val) =>
+                    Get.find<SignUpApiService>().changePassword(val)),
+        !isSignIn ? InputField(hintLabel: 'Confirm Password:', onChanged: (val) =>
+                    Get.find<SignUpApiService>().changePasswordConf(val),) : Container(),
         isSignIn
             ? Align(
                 child: Text(

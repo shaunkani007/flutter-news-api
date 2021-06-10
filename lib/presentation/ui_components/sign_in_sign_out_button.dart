@@ -35,24 +35,40 @@ class SignInSignOutButton extends StatelessWidget {
 
   void signInSignUpPressed() async {
     if (this.displayLabel == 'Sign In') {
-      LoginModel output = await Get.find<LoginApiService>().makeRequest();
-      print(output.success);
-      if (output.success == 'Success!') {
-        var snackbar = GetBar(message: 'Signing in, wait a moment');
+      try {
+        LoginModel output = await Get.find<LoginApiService>().makeRequest();
+        // print(output.success);
+        if (output.success == 'Success!') {
+          var snackbar = GetBar(message: 'Signing in, wait a moment');
+          Get.showSnackbar(snackbar);
+          await Future.delayed(Duration(seconds: 2));
+          Get.offAll(() => HomePage());
+        } else if (output.success == 'Wrong password!') {
+          var snackbar = GetBar(message: 'Wrong Password!');
+          Get.showSnackbar(snackbar);
+        } else {
+          var snackbar = GetBar(message: 'Something went wrong');
+          Get.showSnackbar(snackbar);
+        }
+      } catch (e) {
+        print(e);
+        var snackbar = GetBar(message: 'Server error');
         Get.showSnackbar(snackbar);
-        await Future.delayed(Duration(seconds: 2));
-        Get.offAll(() => HomePage());
-      } else if (output.success == 'Wrong Password!') {
-        print('Incorrect Password');
       }
     } else {
-      SignUpModel output = await SignUpApiService().makeRequest();
+      SignUpModel output = await Get.find<SignUpApiService>().makeRequest();
       print(output.success);
       if (output.success == 'You are regestered,You can login now.') {
         var snackbar = GetBar(message: 'Signing in, wait a moment');
         Get.showSnackbar(snackbar);
         await Future.delayed(Duration(seconds: 2));
         Get.offAll(() => HomePage());
+      } else if (output.success == "Email is already used.") {
+        var snackbar = GetBar(message: "Email is already used.");
+        Get.showSnackbar(snackbar);
+      } else{
+        var snackbar = GetBar(message: "Something went wrong!");
+        Get.showSnackbar(snackbar);
       }
     }
   }
