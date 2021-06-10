@@ -35,6 +35,7 @@ class SignInSignOutButton extends StatelessWidget {
   }
 
   void signInSignUpPressed() async {
+    // sign - in process
     if (this.displayLabel == 'Sign In') {
       try {
         LoginModel output = await Get.find<LoginApiService>().makeRequest();
@@ -49,6 +50,9 @@ class SignInSignOutButton extends StatelessWidget {
         } else if (output.success == 'Wrong password!') {
           var snackbar = GetBar(message: 'Wrong Password!');
           Get.showSnackbar(snackbar);
+        } else if (output.success == 'This Email Is not regestered!') {
+          var snackbar = GetBar(message: 'This Email Is not regestered!');
+          Get.showSnackbar(snackbar);
         } else {
           var snackbar = GetBar(message: 'Something went wrong');
           Get.showSnackbar(snackbar);
@@ -58,7 +62,9 @@ class SignInSignOutButton extends StatelessWidget {
         var snackbar = GetBar(message: 'Server error');
         Get.showSnackbar(snackbar);
       }
-    } else {
+    }
+    //sign up process
+    else {
       SignUpModel output = await Get.find<SignUpApiService>().makeRequest();
       print(output.success);
       if (output.success == 'You are regestered,You can login now.') {

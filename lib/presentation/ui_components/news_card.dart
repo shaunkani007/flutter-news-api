@@ -4,16 +4,23 @@ import 'package:get/get.dart';
 import 'package:kalpas_test/models/favourites_service.dart';
 import 'package:kalpas_test/models/news_model.dart';
 
-class NewsCard extends StatelessWidget {
-  const NewsCard({
+class NewsCard extends StatefulWidget {
+  NewsCard({
     Key key,
     @required this.data,
     @required this.isFavouriteCard,
+    @required this.refreshMethod,
   }) : super(key: key);
 
   final Datum data;
-  final bool isFavouriteCard;
+  bool isFavouriteCard;
+  Function refreshMethod;
 
+  @override
+  _NewsCardState createState() => _NewsCardState();
+}
+
+class _NewsCardState extends State<NewsCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,12 +40,33 @@ class NewsCard extends StatelessWidget {
                 flex: 1,
                 child: IconButton(
                   icon: Icon(
-                    !isFavouriteCard ? Icons.favorite_border_outlined : Icons.favorite,
+                    !widget.isFavouriteCard
+                        ? Icons.favorite_border_outlined
+                        : Icons.favorite,
                     size: 40,
                     color: Colors.red,
                   ),
                   onPressed: () => {
-                    Get.find<FavouritesService>().addToFavourites(data),
+                    if (widget.isFavouriteCard)
+                      {
+                        widget.refreshMethod(),
+                        setState(() {
+                          widget.isFavouriteCard = false;
+                          Get.find<FavouritesService>()
+                              .removeFromFavourites(widget.data);
+                        })
+                      }
+                    else
+                      {
+                        widget.refreshMethod(),
+                        setState(
+                          () {
+                            widget.isFavouriteCard = true;
+                            Get.find<FavouritesService>()
+                                .addToFavourites(widget.data);
+                          },
+                        ),
+                      },
                   },
                 ),
               ),
@@ -50,21 +78,21 @@ class NewsCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data.title,
+                        widget.data.title,
                         style: TextStyle(fontWeight: FontWeight.bold),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         textAlign: TextAlign.justify,
                       ),
                       Text(
-                        data.summary,
+                        widget.data.summary,
                         // style: TextStyle(color: Colors.grey),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         textAlign: TextAlign.justify,
                       ),
                       Text(
-                        data.published,
+                        widget.data.published,
                         style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,

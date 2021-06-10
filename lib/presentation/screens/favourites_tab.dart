@@ -25,7 +25,15 @@ class _FavouritesTabState extends State<FavouritesTab> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ListView(
-        children: favourites.map((e) => NewsCard(data: e, isFavouriteCard: true,)).toList(),
+        children: favourites
+            .map((e) => NewsCard(
+                  refreshMethod: () {
+                    setState(() {});
+                  },
+                  data: e,
+                  isFavouriteCard: true,
+                ))
+            .toList(),
       ),
     );
   }

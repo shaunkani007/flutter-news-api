@@ -12,4 +12,13 @@ class FavouritesService extends GetxService {
     favouritesList.add(data);
     print(favouritesList);
   }
+
+  void removeFromFavourites(Datum data) {
+    print('entered remove');
+    if (favouritesList.map((e) => e.id).contains(data.id)) {
+      // print('removing...');
+      favouritesList.removeWhere((element) => element.id == data.id);
+      // print(favouritesList);
+    }
+  }
 }

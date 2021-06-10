@@ -27,8 +27,14 @@ class _NewsArticlesListState extends State<NewsArticlesList> {
           var x = List.generate(
             dataList.length,
             (index) => NewsCard(
+              refreshMethod: () {
+                setState(() {});
+              },
               data: dataList.elementAt(index),
-              isFavouriteCard: Get.find<FavouritesService>().favouritesList.map((e) => e.id).contains(dataList.elementAt(index).id),
+              isFavouriteCard: Get.find<FavouritesService>()
+                  .favouritesList
+                  .map((e) => e.id)
+                  .contains(dataList.elementAt(index).id),
             ),
           );
           return ListView(children: x);

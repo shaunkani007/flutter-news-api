@@ -23,7 +23,7 @@ class SignUpApiService {
 
   Future<SignUpModel> makeRequest() async {
     var client = http.Client();
-    var signUpModel = null;
+    SignUpModel signUpModel;
     try {
       var url = Uri.parse('https://nodejs-register-login-app.herokuapp.com/');
       print('Parsing');

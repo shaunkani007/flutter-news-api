@@ -1,5 +1,4 @@
 // @dart=2.9
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:kalpas_test/models/login_model.dart';
 import 'dart:convert';
@@ -18,7 +17,7 @@ class LoginApiService {
 
   Future<LoginModel> makeRequest() async {
     var client = http.Client();
-    var loginModel = null;
+    LoginModel loginModel;
     try {
       var url =
           Uri.parse('https://nodejs-register-login-app.herokuapp.com/login');

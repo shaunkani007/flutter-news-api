@@ -6,7 +6,7 @@ import 'dart:convert';
 class NewsApiService {
   Future<NewsModel> makeRequest() async {
     var client = http.Client();
-    var newsModel = null;
+    NewsModel newsModel;
     try {
       var url = Uri.parse('https://api.first.org/data/v1/news');
       // print('Parsing');
