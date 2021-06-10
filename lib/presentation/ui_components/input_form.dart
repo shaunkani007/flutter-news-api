@@ -47,8 +47,13 @@ class InputForm extends StatelessWidget {
                 hintLabel: 'Password:',
                 onChanged: (val) =>
                     Get.find<SignUpApiService>().changePassword(val)),
-        !isSignIn ? InputField(hintLabel: 'Confirm Password:', onChanged: (val) =>
-                    Get.find<SignUpApiService>().changePasswordConf(val),) : Container(),
+        !isSignIn
+            ? InputField(
+                hintLabel: 'Confirm Password:',
+                onChanged: (val) =>
+                    Get.find<SignUpApiService>().changePasswordConf(val),
+              )
+            : Container(),
         isSignIn
             ? Align(
                 child: Text(
@@ -71,7 +76,19 @@ class InputForm extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.facebook)),
+            Transform.translate(
+              offset: Offset(0, 5),
+              child: Container(
+                height: 45,
+                width: 45,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/google.jpg'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
             IconButton(
               onPressed: () {},
               icon: Icon(
