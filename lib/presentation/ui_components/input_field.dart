@@ -1,8 +1,10 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kalpas_test/API%20Services/login_api_service.dart';
 
 class InputField extends StatelessWidget {
-  const InputField({
+  InputField({
     Key key,
     @required this.hintLabel,
   }) : super(key: key);
@@ -13,6 +15,14 @@ class InputField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        onChanged: (value) {
+          if(hintLabel == 'Email:'){
+            Get.find<LoginApiService>().email = value;
+          }
+          if(hintLabel == 'Password:'){
+            Get.find<LoginApiService>().password = value;
+          }
+        },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 20),
           fillColor: Colors.green[300],

@@ -7,7 +7,6 @@ import 'package:kalpas_test/models/login_model.dart';
 import 'package:get/get.dart';
 import 'package:kalpas_test/models/signup_model.dart';
 import 'package:kalpas_test/presentation/screens/home_page.dart';
-import 'package:kalpas_test/presentation/screens/news_tab.dart';
 
 class SignInSignOutButton extends StatelessWidget {
   const SignInSignOutButton({Key key, @required this.displayLabel})
@@ -36,7 +35,7 @@ class SignInSignOutButton extends StatelessWidget {
 
   void signInSignUpPressed() async {
     if (this.displayLabel == 'Sign In') {
-      LoginModel output = await LoginApiService().makeRequest();
+      LoginModel output = await Get.find<LoginApiService>().makeRequest();
       print(output.success);
       if (output.success == 'Success!') {
         var snackbar = GetBar(message: 'Signing in, wait a moment');
